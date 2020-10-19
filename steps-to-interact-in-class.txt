@@ -1,0 +1,7 @@
+1. create a folder for training
+2. create two sub folders
+	* MyRepository
+		* where you will do your assignments and practices
+
+	* TrainersRepository
+		* here you will download trainers content
