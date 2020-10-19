@@ -5,3 +5,38 @@
 
 	* TrainersRepository
 		* here you will download trainers content
+
+
+3. Trainer's Repository -- Clone trainers forlder in trainers repository
+
+c:> git clone repository-url .
+
+	* this is one time
+
+
+4. every time you want to get the latest updates
+
+c:> git pull
+
+
+4.  Create Your own repository on GIT --> note the url
+
+5. copy the batch files form 'TrainersRepository' folder to 'MyRepository' folder
+
+6. Open a command prompt in the MyRepository Folder
+
+7. [One Time Effort] initalize the git in the current with your url  
+	choice 1:   follow the command as seen in your new repository page
+
+	chocie 2:
+		c:> git-init your-git-url
+
+8. Everytime you want to update your repository or submit the assigment
+
+	* push the change to the repository
+
+	c:>git-update  name-of-the-update
+
+	c:>git-udpate assignment 1 submitted
+
+
