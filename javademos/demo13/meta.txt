@@ -1,0 +1,3 @@
+Version: 1.2
+Author: Vivek Dutta Mishra
+Main-Class: in.conceptarchitect.app.FurnitureApp
