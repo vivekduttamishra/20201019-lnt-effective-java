@@ -1,5 +1,5 @@
+package furnitures.bedroom;  //Bed is part of furniture package and bedroom sub package
 
-
-class Bed{
+public class Bed{
    public int price(){return 10000;} 
 }
