@@ -1,6 +1,6 @@
-package in.conceptarchitect.banking;
+package in.conceptarchitect.banking.archive;
 
-public class BankAccount {
+public class BankAccountV1 {
 	
 	int accountNumber;
 	String name;
@@ -8,9 +8,6 @@ public class BankAccount {
 	double balance;
 	double interestRate;
 	
-	public  BankAccount(int accountNumber, String name, String password, double amount, double rate) {
-		createAccount(accountNumber, name, password,amount, rate);
-	}
 	
 	public void createAccount(int accountNumber, String name, String password, double amount, double rate) {
 
