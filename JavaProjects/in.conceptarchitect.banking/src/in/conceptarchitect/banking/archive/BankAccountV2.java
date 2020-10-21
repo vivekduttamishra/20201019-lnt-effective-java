@@ -1,14 +1,14 @@
-package in.conceptarchitect.banking;
+package in.conceptarchitect.banking.archive;
 
 import in.conceptarchitect.utils.Input;
 
-public class BankAccount {
+public class BankAccountV2 {
 	
 	int accountNumber;
 	String name;
 	String password;
 	double balance;
-	static double interestRate;
+	double interestRate;
 	
 	
 	public int getAccountNumber() {
@@ -32,18 +32,18 @@ public class BankAccount {
 	//no set balance. to set balance use deposit or withdraw
 	
 	//get set interest rate
-	public static double getInterestRate() {
+	public double getInterestRate() {
 		return interestRate;
 	}
 
-	public static void setInterestRate(double interestRate) {
-		BankAccount.interestRate = interestRate;
+	public void setInterestRate(double interestRate) {
+		this.interestRate = interestRate;
 	}
 
 	
 	
 	
-	public  BankAccount(int accountNumber, String name, String password, double amount, double rate) {
+	public  BankAccountV2(int accountNumber, String name, String password, double amount, double rate) {
 		createAccount(accountNumber, name, password,amount, rate);
 	}
 	

@@ -8,6 +8,35 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
+		//menuDrivenProgram();
+		
+		BankAccount a1=new BankAccount(1,"Vivek","p@ss", 10000,10);
+		
+		BankAccount a2= new BankAccount(1,"Vivek","p@ss", 10000,10);
+		
+		System.out.println("Interest rate for a1\t"+a1.getInterestRate());
+		System.out.println("Interest rate for a2\t"+a2.getInterestRate());
+		
+		//it appears to change rate only for object "a1"
+		// it is actually changing rate for everyone
+		// Bad code! Unreadable
+		//a1.setInterestRate(12); //unclear code
+		
+		//Logically clear code
+		BankAccount.setInterestRate(12); //Oh! its changing for everone
+		
+		System.out.println("Interest rate for a1\t"+a1.getInterestRate());
+		System.out.println("Interest rate for a2\t"+a2.getInterestRate());
+		
+		
+		
+		
+		
+		
+		
+	}
+
+	private static void menuDrivenProgram() {
 		BankAccount a1=new BankAccount(1, "Vivek","p@ss",20000,12);
 		
 		//a1.createAccount(1, "Vivek","p@ss",20000,12); //no need to call this line
@@ -44,13 +73,6 @@ public class Program {
 			System.out.println("\n\n");
 			
 		}while(choice!=0);
-		
-		
-		
-		
-		
-		
-		
 	}
 
 }
