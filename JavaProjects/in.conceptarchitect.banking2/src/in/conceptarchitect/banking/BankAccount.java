@@ -4,12 +4,37 @@ import in.conceptarchitect.utils.Input;
 
 public class BankAccount {
 	
+	
 	int accountNumber;
 	String name;
 	String password;
 	double balance;
-	static double interestRate = 10; //initalizing static member if it is a constant value
 	
+	static int accountCount=0;   //initalized with a constant	
+	
+	static double interestRate; //what is this value is pulled from a database and not a constant
+	
+	static {
+		
+		//write one-time initialization logic to initalize your static data
+		//it is called before any constructor is called and as soon as class is loaded in the memory
+		
+		System.out.println("BankAccount intialized...");
+		interestRate=10;
+		
+		//accountNumber=5;  //can't initalize non-static fields
+		
+	}
+	
+	public  BankAccount( String name, String password, double amount) {
+		
+		this.accountNumber= ++accountCount; //uses shared field to auto increment account number
+		this.name=name;  
+		this.password=salt(password); //we are saving a hashed/salted password and not the original one		
+		
+		this.balance=amount; 
+		//interestRate=rate;   //static memebers are not initalized in constructor   
+	}
 	
 	
 
@@ -85,15 +110,7 @@ public class BankAccount {
 	
 	
 	
-	public  BankAccount(int accountNumber, String name, String password, double amount) {
-		
-		this.accountNumber=accountNumber;
-		this.name=name;  
-		this.password=salt(password); //we are saving a hashed/salted password and not the original one		
-		
-		this.balance=amount; 
-		//interestRate=rate;   //static memebers are not initalized in constructor   
-	}
+	
 	
 	public void show() {
 		System.out.println("Account Number\t"+this.accountNumber); 
@@ -142,6 +159,19 @@ public class BankAccount {
 	public void creditInterest() {
 		// TODO Auto-generated method stub
 		balance+=(balance*interestRate)/1200; //one month interest at a time.
+	}
+	
+	
+	public static boolean transfer(BankAccount source,  double amount, String password,BankAccount target) {
+		
+		if(source.withdraw(amount,password)) {
+			target.balance+=amount;
+			return true;
+		} else {
+			return false;
+		}
+		
+		
 	}
 
 }

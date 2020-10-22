@@ -10,27 +10,39 @@ public class Program {
 
 		//menuDrivenProgram();
 		
-		BankAccount a1=new BankAccount(1,"Vivek","p@ss", 10000);
+		System.out.println("Program started...");
 		
-		BankAccount a2= new BankAccount(1,"Vivek","hello", 10000);
+		BankAccount a1=new BankAccount("Vivek","p@ss", 10000);
 		
-		System.out.println("Interest rate for a1\t"+a1.getInterestRate());
-		System.out.println("Interest rate for a2\t"+a2.getInterestRate());
+		BankAccount a2= new BankAccount("Sanjay","hello", 10000);
+		
+		System.out.printf("Interest rate for %d is %f\n",a1.getAccountNumber(),a1.getInterestRate());
+		System.out.printf("Interest rate for %d is %f\n",a2.getAccountNumber(),a2.getInterestRate());
+		
 		
 		//it appears to change rate only for object "a1"
 		// it is actually changing rate for everyone
 		// Bad code! Unreadable
-		a1.setInterestRate(12); //unclear code
+		//a1.setInterestRate(12); //unclear code
 		
 		//Logically clear code
 		BankAccount.setInterestRate(12); //Oh! its changing for everone
 		
-		System.out.println("Interest rate for a1\t"+a1.getInterestRate());
-		System.out.println("Interest rate for a2\t"+a2.getInterestRate());
+
+		System.out.printf("Interest rate for %d is %f\n",a1.getAccountNumber(),a1.getInterestRate());
+		System.out.printf("Interest rate for %d is %f\n",a2.getAccountNumber(),a2.getInterestRate());
+		
+		a1.show();
+		a2.show();
+		
+		System.out.println(BankAccount.transfer(a1, 15000, "p@ss", a2)); //fails
 		
 		
+		System.out.println(BankAccount.transfer(a1, 1500, "p@ss", a2)); //succeeds
 		
 		
+		a1.show();
+		a2.show();
 		
 		
 		
