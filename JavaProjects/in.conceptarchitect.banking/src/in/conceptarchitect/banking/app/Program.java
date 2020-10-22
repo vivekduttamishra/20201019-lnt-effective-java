@@ -20,7 +20,7 @@ public class Program {
 		//it appears to change rate only for object "a1"
 		// it is actually changing rate for everyone
 		// Bad code! Unreadable
-		//a1.setInterestRate(12); //unclear code
+		a1.setInterestRate(12); //unclear code
 		
 		//Logically clear code
 		BankAccount.setInterestRate(12); //Oh! its changing for everone
