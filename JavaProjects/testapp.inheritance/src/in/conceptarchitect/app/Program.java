@@ -10,7 +10,7 @@ public class Program {
 		
 		Student student=new Student("Shivanshi","shivanshi@gmail.com","99393939","501","PG","Java","Cloud");			
 		
-		System.out.println(student.name);
+		//System.out.println(student.name);
 
 		checkPerson(student); //check student as Person
 		
