@@ -1,6 +1,6 @@
 package in.conceptarchitect.animals;
 
-public class Reptile extends Animal{
+public abstract class Reptile extends Animal implements Hunter{
 
 	
 	@Override
@@ -18,8 +18,6 @@ public class Reptile extends Animal{
 		return getType()+" flesh eaters";
 	}
 	
-	public String hunt() {
-		return getType()+" hutns its pray somehow";
-	}
+	public abstract String hunt();
 
 }

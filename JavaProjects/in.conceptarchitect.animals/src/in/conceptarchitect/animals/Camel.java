@@ -1,6 +1,6 @@
 package in.conceptarchitect.animals;
 
-public class Camel extends Mammal{
+public class Camel extends Mammal implements Domestic, Rideable{ 
 	
 	@Override
 	public String eat() {

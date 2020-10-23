@@ -1,6 +1,6 @@
 package in.conceptarchitect.animals;
 
-public class Eagle extends Bird {
+public class Eagle extends Bird implements Hunter{
 
 	
 	@Override	
@@ -12,4 +12,6 @@ public class Eagle extends Bird {
 	public String hunt() {
 		return getType()+" is a flying hunter";
 	}
+
+	
 }

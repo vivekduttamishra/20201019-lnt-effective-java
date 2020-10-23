@@ -1,11 +1,17 @@
 package in.conceptarchitect.animals;
 
-public class Bird extends Animal{
+public abstract class Bird extends Animal{
 
 	
 	@Override
 	public String breed() {
 		return getType()+" is egg laying";
+	}
+	
+	@Override
+	public String move() {
+		// TODO Auto-generated method stub
+		return fly();
 	}
 	
 	public String fly() {

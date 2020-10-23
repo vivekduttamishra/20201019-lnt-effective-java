@@ -1,6 +1,6 @@
 package in.conceptarchitect.animals;
 
-public class Dog extends Mammal{
+public class Dog extends Mammal implements Domestic,Hunter{
 	
 	@Override
 	public String eat() {
@@ -8,11 +8,11 @@ public class Dog extends Mammal{
 		return getType()+" is a flesh eater";
 	}
 	
-	public String guard() {
-		return getType()+" can guard the house";
+	public String hunt() {
+		return getType()+" hunts its pray";
 	}
 	
-	public String hunt() {
+	public String guard() {
 		return getType()+" gurads our house";
 	}
 
