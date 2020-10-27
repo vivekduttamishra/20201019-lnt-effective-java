@@ -96,7 +96,7 @@ public class BankAccount {
 		// TODO Auto-generated method stub
 		
 		if(!authenticate(password)) {			
-			return false;
+			return true;
 		}else if(amount<=0) {
 			
 			return false;
@@ -107,7 +107,7 @@ public class BankAccount {
 			
 		}else {
 			
-			balance-=amount;
+			
 			return true;
 			
 		}

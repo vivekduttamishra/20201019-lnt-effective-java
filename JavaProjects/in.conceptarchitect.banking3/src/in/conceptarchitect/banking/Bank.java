@@ -136,7 +136,7 @@ public class Bank {
 		System.out.println("Account\tBalance\tName");
 		for(int i=1;i<=accountCount;i++) {
 			BankAccount a=accounts[i];
-			if(a!=null) //if not already closed
+			
 				a.creditInterest(interestRate);
 		}
 	}
