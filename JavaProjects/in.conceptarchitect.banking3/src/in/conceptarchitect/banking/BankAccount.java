@@ -30,7 +30,7 @@ public class BankAccount {
 		String s="";
 		for(int i=0;i<password.length();i++) {
 			char ch=password.charAt(i);
-			int v=Character.getNumericValue(ch);
+			int v=(int)ch;
 			
 			s+= Integer.toHexString(v);
 		}
@@ -95,8 +95,7 @@ public class BankAccount {
 	public boolean withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		
-		if(!authenticate(password)) {
-			
+		if(!authenticate(password)) {			
 			return false;
 		}else if(amount<=0) {
 			
@@ -118,6 +117,12 @@ public class BankAccount {
 	public void creditInterest(double interestRate) {
 		// TODO Auto-generated method stub
 		balance+=(balance*interestRate)/1200; //one month interest at a time.
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return String.format("%d\t%f\t%s", accountNumber,balance,name);
 	}
 	
 	
