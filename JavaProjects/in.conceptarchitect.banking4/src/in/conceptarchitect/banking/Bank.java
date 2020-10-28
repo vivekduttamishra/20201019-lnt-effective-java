@@ -52,7 +52,7 @@ public class Bank {
 		
 			default: case "savings": account=new SavingsAccount(name,password,amount);break;
 			case "current": account=new CurrentAccount(name,password,amount);break;
-			case "overdraft":account=new OverDraftAccount(name,password,amount); break;
+			//case "overdraft":account=new OverDraftAccount(name,password,amount); break;
 		}
 		
 		

@@ -24,6 +24,16 @@ public class SavingsAccountTests {
 	}
 	
 	@Test
+	public void withdraw_failsForWrongPassword() {
+		boolean result=account.withdraw(1, "wrong-password");
+		
+		assertFalse(result);
+		
+		
+	}
+	
+	
+	@Test
 	public void withdraw_failsIfNetBalancePostWithdrawRedudesBelowMinBalance() {
 		
 		boolean result = account.withdraw(balance-minBalance+1, password);		
@@ -34,6 +44,14 @@ public class SavingsAccountTests {
 	public void withdraw_succeedsIfPostWithdrawMinBalanceIsAvailable() {
 		boolean result=account.withdraw(balance-minBalance, password);
 		assertTrue(result);
+	}
+	
+	@Test
+	public void withdraw_reducesTheBalance() {
+		
+		account.withdraw(1000, password);
+		
+		assertEquals(balance-1000, account.getBalance(),0.01);
 	}
 	
 	@Test
@@ -52,4 +70,8 @@ public class SavingsAccountTests {
 		
 		
 	}
+
+
+	
+
 }
