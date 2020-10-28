@@ -1,7 +1,11 @@
 package in.conceptarchitect.banking.client;
 
 import in.conceptarchitect.banking.Bank;
-import in.conceptarchitect.banking.BankAccount;
+import in.conceptarchitect.banking.exceptions.BankingException;
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
+import in.conceptarchitect.banking.exceptions.InvalidCredentialsException;
+import in.conceptarchitect.banking.exceptions.InvalidDenominationException;
 import in.conceptarchitect.utils.Input;
 
 public class ATM {
@@ -23,23 +27,28 @@ public class ATM {
 
 	private void displayWelcomeScreen() {
 		// TODO Auto-generated method stub
-		while (true) {
-			accountNumber = keyboard.readInt("accountNumber?");
-			if (accountNumber == -999) { // hidden admin menu
-				if (keyboard.readString("error:").equals("NIMDA"))
-					if (displayAdminMenu().equals("QUIT"))
-						return;
-			} else
-				displayUserMenu();
+		try {
+			while (true) {
+				accountNumber = keyboard.readInt("accountNumber?");
+				if (accountNumber == -999) { // hidden admin menu
+					if (keyboard.readString("error:").equals("NIMDA"))
+						displayAdminMenu();
 
+				} else
+					displayUserMenu();
+
+			}
+		} catch (RuntimeException ex) {
+			//Ok we are out of our ATM
+			System.out.println("ATM is shutdown");
 		}
 	}
 
-	private void displayUserMenu() {
+	private void _displayUserMenu() {
 		// TODO Auto-generated method stub
 		System.out.println("Welcome " + accountNumber);
 
-		int choice=0;
+		int choice = 0;
 
 		do {
 			try {
@@ -58,49 +67,91 @@ public class ATM {
 					doShow();
 					break;
 				case 5:
-					if (doCloseAccount())
-						return;
-					else
-						break;
+					doCloseAccount();
+					return;
+
 				case 0:
 					break;
 				default:
 					System.out.println("invalid input. retry");
 
 				}
-				
-			} catch (RuntimeException ex) {
-				System.out.println(ex.getMessage());
+
+			} catch (InvalidCredentialsException ex) {
+				System.out.println("Invalid Credentials for account number " + ex.getAccountNumber());
+			} catch (InvalidAccountNumberException ex) {
+				System.out.println("Invalid Account Number " + ex.getAccountNumber());
+			} catch (InvalidDenominationException ex) {
+				System.out.println("Invalid Amount " + ex.getMessage());
+			} catch (InsufficientBalanceException ex) {
+				System.out.println(
+						"Insufficient Balance in account " + ex.getAccountNumber() + ". Deficit:" + ex.getDeficit());
 			}
-			
+
 			System.out.println();
 		} while (choice != 0);
-		
 
 	}
 
-	private boolean doCloseAccount() {
+	private void displayUserMenu() {
+		// TODO Auto-generated method stub
+		System.out.println("Welcome " + accountNumber);
+
+		int choice = 0;
+
+		do {
+			try {
+				choice = keyboard.readInt("1. Deposit  2. Widthraw  3. Transfer  4. Show 5. Close Account  0. Exit: ");
+				switch (choice) {
+				case 1:
+					doDeposit();
+					break;
+				case 2:
+					doWithdraw();
+					break;
+				case 3:
+					doTransfer();
+					break;
+				case 4:
+					doShow();
+					break;
+				case 5:
+					doCloseAccount();
+					return;
+
+				case 0:
+					break;
+				default:
+					System.out.println("invalid input. retry");
+
+				}
+
+			} catch (InsufficientBalanceException ex) {
+				printSlip("Account Number " + ex.getAccountNumber() + " has insufficient balance. Total Deficit:"
+						+ ex.getDeficit());
+			} catch (BankingException ex) {
+				printSlip("Error in account:" + ex.getAccountNumber() + "\t" + ex.getMessage());
+
+			}
+
+			System.out.println();
+		} while (choice != 0);
+
+	}
+
+	private void doCloseAccount() {
 		// TODO Auto-generated method stub
 		String pin = keyboard.readString("pin?");
-		if (bank.close(accountNumber, pin)) {
-			printSlip("Your account has been closed");
-			return true;
-		} else {
-			printSlip("Request to close account declined");
-			return false;
-		}
+		bank.close(accountNumber, pin);
+		printSlip("Your account has been closed");
 
 	}
 
 	private void doShow() {
 		// TODO Auto-generated method stub
 		String pin = keyboard.readString("pin?");
-
 		String accountInfo = bank.getAccountInfo(accountNumber, pin);
-		if (accountInfo != null)
-			printSlip(accountInfo);
-		else
-			printSlip("Error: unable to fetch the details");
+		printSlip(accountInfo);
 
 	}
 
@@ -109,11 +160,8 @@ public class ATM {
 		int amount = keyboard.readInt("Amount?");
 		String pin = keyboard.readString("pin?");
 		int toAccount = keyboard.readInt("To?");
-
-		if (bank.transfer(accountNumber, amount, pin, toAccount))
-			printSlip(amount + " transferred to " + toAccount);
-		else
-			printSlip("Transfer Request Declined");
+		bank.transfer(accountNumber, amount, pin, toAccount);
+		printSlip(amount + " transferred to " + toAccount);
 
 	}
 
@@ -121,33 +169,28 @@ public class ATM {
 		// TODO Auto-generated method stub
 		int amount = keyboard.readInt("Amount? ");
 		String pin = keyboard.readString("pin?");
-		if (bank.withdraw(accountNumber, amount, pin))
-			dispenseCash(amount);
-		else
-			printSlip("Unable to widraw");
+
+		if (amount % 100 != 0)
+			throw new InvalidDenominationException("Amount Must be a mulitple of 100");
+
+		bank.withdraw(accountNumber, amount, pin);
+		dispenseCash(amount); // don't worry. we reach here only when withdraw succeeed
 
 	}
 
 	private void dispenseCash(int amount) {
-		// TODO Auto-generated method stub
-		if (amount % 100 == 0) { // if not a multiple of 100
 
-			System.out.println("Please collect your cash :" + amount);
-
-		} else {
-			printSlip("Unable to dispense cash. try a multiple of 100");
-			bank.deposit(accountNumber, amount); // revert the transaction
-		}
+		System.out.println("Please collect your cash :" + amount);
 
 	}
 
 	private void doDeposit() {
 		// TODO Auto-generated method stub
 		int amount = keyboard.readInt("Amount? ");
-		if (bank.deposit(accountNumber, amount))
-			printSlip("Amount Deposited");
-		else
-			printSlip("Deposit Failed");
+		bank.deposit(accountNumber, amount);
+		printSlip("Amount Deposited");
+		// no need to handle error here
+
 	}
 
 	private void printSlip(String string) {
@@ -155,7 +198,7 @@ public class ATM {
 		System.out.println(string);
 	}
 
-	private String displayAdminMenu() {
+	private void displayAdminMenu() {
 		// TODO Auto-generated method stub
 		int choice;
 		do {
@@ -171,7 +214,7 @@ public class ATM {
 				doPrintAccounts();
 				break;
 			case 4:
-				return "QUIT";
+				throw new RuntimeException("QUIT SIGNAL");
 			case 0:
 				break;
 			default:
@@ -180,7 +223,7 @@ public class ATM {
 			}
 			System.out.println();
 		} while (choice != 0);
-		return "";
+
 	}
 
 	private void doPrintAccounts() {

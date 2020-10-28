@@ -1,5 +1,8 @@
 package in.conceptarchitect.banking;
 
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
+
 public class Bank {
 	
 	int accountCount=0;   	
@@ -36,20 +39,19 @@ public class Bank {
 	
 	
 	private BankAccount getAccountById(int accountNumber) {
-		if(accountNumber<1 || accountNumber>accountCount)
-			return null; //no such account
+		if(accountNumber<1 || accountNumber>accountCount || accounts[accountNumber]==null)
+			//return null; //no such account
+			throw new InvalidAccountNumberException(accountNumber);
 		
 		BankAccount account=accounts[accountNumber];
 		return account;
 	}
 	
-	public boolean deposit(int accountNumber, double amount) {
+	
+	
+	public void deposit(int accountNumber, double amount) {
 		BankAccount account = getAccountById(accountNumber);
-		
-		if(account==null)
-			return false; //indicates an error
-		
-		return account.deposit(amount);
+		account.deposit(amount);
 	}
 	
 	
@@ -82,55 +84,39 @@ public class Bank {
 	
 	
 	
-	public boolean close(int accountNumber, String password) {
+	public void close(int accountNumber, String password) {
 		BankAccount account = getAccountById(accountNumber);
 		
-		//TODO: validate password is correct
-		if(!account.authenticate(password))
-			return false; //error
+		account.authenticate(password);
+				
 		
-		
-		//TODO: validate it has balance>0
 		if(account.getBalance()<0)
-			return false; //error. can't close account with negative balance
+			throw new InsufficientBalanceException(accountNumber, -account.getBalance()," You need to clear the overdue to close your account");
 		
 		
-		//TODO: close the account and return true
 		accounts[accountNumber]=null; //remove the account
-		return true;
+
 	}
 	
 	
 	
 	
 	
-	public boolean withdraw(int accountNumber, double amount, String password) {
+	public void withdraw(int accountNumber, double amount, String password) {
 		BankAccount account = getAccountById(accountNumber);
-		
-		//TODO: we must verify account exists
-		if(account==null)
-			return false; //indicates an error
-		
-		return account.withdraw(amount, password); //may return success or falure
+		account.withdraw(amount, password); //may return success or falure
 	}
 
 	
 	
-	public boolean transfer(int sourceAccountNumber,  double amount, String password,int targetAccountNumber) {
+	public void transfer(int sourceAccountNumber,  double amount, String password,int targetAccountNumber) {
 		
-		BankAccount src = getAccountById(sourceAccountNumber);
 		BankAccount target=getAccountById(targetAccountNumber);
+		BankAccount src = getAccountById(sourceAccountNumber);
 		
-		if(src==null)
-			return false;   //indicates an error
-		if(target==null) 
-			return false;  //indicates an error
-		 
+		src.withdraw(amount, password);
+		target.deposit(amount);
 		
-		if(src.withdraw(amount, password))
-			return target.deposit(amount);
-		else	
-			return false; //indicates an error
 	}
 
 	public void printAccountList() {
@@ -157,20 +143,16 @@ public class Bank {
 	public String getAccountInfo(int accountNumber, String pin) {
 		// TODO Auto-generated method stub
 		BankAccount account= getAccountById(accountNumber);
-		if(account!=null && account.authenticate(pin))
-			return account.toString();
+		account.authenticate(pin);
+		return account.toString();
 		
-		
-		return null; //indicates an error
 	}
 
 	public BankAccount getAccount(int accountNumber, String password) {
 		// TODO Auto-generated method stub
 		BankAccount account=getAccountById(accountNumber);
-		if(account!=null && account.authenticate(password))
-			return account;			
-		
-		return null;
+		account.authenticate(password);
+		return account;
 	}
 	
 	

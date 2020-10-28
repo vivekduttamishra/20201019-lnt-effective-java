@@ -1,5 +1,8 @@
 package in.conceptarchitect.banking;
 
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+import in.conceptarchitect.banking.exceptions.InvalidCredentialsException;
+import in.conceptarchitect.banking.exceptions.InvalidDenominationException;
 import in.conceptarchitect.utils.Input;
 
 public class BankAccount {
@@ -21,29 +24,6 @@ public class BankAccount {
 		   
 	}
 	
-	public boolean withdraw(double amount, String password) {
-		// TODO Auto-generated method stub
-		
-		if(!authenticate(password)) {			
-			return false;
-		}else if(amount<=0) {
-			
-			return false;
-			
-		} else if(amount> balance) {
-			
-			return false;
-			
-		}else {
-			
-			balance-=amount;
-			
-			return true;
-			
-		}
-		
-	}
-
 	
 	
 
@@ -60,21 +40,20 @@ public class BankAccount {
 		return s;
 	}
 	
-	public boolean authenticate(String password) {
-		if (!salt(password).equals(this.password))
-			throw new RuntimeException("Invalid Password");
-			
-		return true;
+	public void authenticate(String password) {		
 		
+		if (!salt(password).equals(this.password))
+			throw new InvalidCredentialsException(accountNumber);	
+		
+		//if I reach here. then authentication was successful
 	}
 	
-	public boolean changePassword(String oldPassword, String newPassword) {
+	public void changePassword(String oldPassword, String newPassword) {
 		
-		if(authenticate(oldPassword)) {
-			password=salt(newPassword);
-			return true;
-		}else
-			return false;
+		authenticate(oldPassword);//throws exception if authentication fails
+
+		password=salt(newPassword);//If I reach here, authentication was successful
+		
 		
 	}
 	
@@ -87,6 +66,7 @@ public class BankAccount {
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name=name;
 	}
@@ -107,18 +87,35 @@ public class BankAccount {
 	 
 	}
 	
-	public boolean deposit(double amount) {
+	public void checkDenomination(double amount) {
+		if(amount<=0)
+			throw new InvalidDenominationException(accountNumber,"Amount must be a positive value");
+			
+	}
+	
+	public void deposit(double amount) {
 		
-		if(amount>0) {
-			balance+=amount;
-			return true;	//System.out.println("Amount deposited successfully");
-		}
-		else {
-			return false;//System.out.println("Invalid Amount. Deposit Failed");
-		}
+		checkDenomination(amount);
+		balance+=amount;
 		
 	}
 
+	
+	public void withdraw(double amount, String password) {
+		// TODO Auto-generated method stub
+		
+		authenticate(password);
+		checkDenomination(amount);		
+		
+		if(amount> balance)			
+			throw new InsufficientBalanceException(accountNumber, amount-balance);
+			
+			
+		balance-=amount;	
+		
+	}
+
+	
 
 	public void creditInterest(double interestRate) {
 		// TODO Auto-generated method stub

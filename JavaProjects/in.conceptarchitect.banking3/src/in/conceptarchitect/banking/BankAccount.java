@@ -38,7 +38,10 @@ public class BankAccount {
 	}
 	
 	public boolean authenticate(String password) {
-		return salt(password).equals(this.password);
+		if(! salt(password).equals(this.password))
+			return false;
+		
+		return true;
 	}
 	
 	public boolean changePassword(String oldPassword, String newPassword) {

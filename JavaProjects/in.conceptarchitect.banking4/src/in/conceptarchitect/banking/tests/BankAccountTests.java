@@ -1,12 +1,14 @@
 package in.conceptarchitect.banking.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
+
 
 import org.junit.Before;
 import org.junit.Test;
 
 import in.conceptarchitect.banking.BankAccount;
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+import in.conceptarchitect.banking.exceptions.InvalidCredentialsException;
 
 public class BankAccountTests {
 	
@@ -27,29 +29,41 @@ public class BankAccountTests {
 	
 	
 	@Test
-	public void withdraw_shouldSucceedForHappyPath() {
+	public void withdraw_shouldSucceedForHappyPath() {		
 		
 		
-		//ACT
-		boolean result=account.withdraw(balance, correctPassword); //should be successful		
-		assertEquals(true, result);
-	}
-	
-	@Test
-	public void withdraw_shouldFailForWrongPassword() {
-		//ACT
-		boolean result=account.withdraw(balance, "wrong-password"); //should be successful
+		account.withdraw(1, correctPassword); //should be successful		
 		
-		//ASSERT
-		assertFalse(result);
+		//what do I assert on
+		
+		assertEquals(balance-1, account.getBalance(),0);
 		
 	}
 	
+	
+	
 	@Test
+	public void withdraw_shouldThrowInvalidCredentialsExceptionForWrongPassword() {
+		//ACT
+		try {
+			account.withdraw(balance,"wrong-password");  //should throw InvalidCredentialsException
+			//Oh! exceptected exception didn't occur. Its a failure
+			fail("Didn't throw InvalidCredentialsException");
+		
+		} catch(InvalidCredentialsException ex) {
+			//success. do nothing
+		}
+		
+	}
+	
+	
+	
+	
+	@Test(expected = InsufficientBalanceException.class)
 	public void withdraw_shouldFailForInsufficientBalance() {
-		boolean result=account.withdraw(balance+1, correctPassword);
+
+		account.withdraw(balance+1, correctPassword);		
 		
-		assertFalse(result);
 	}
 	
 	

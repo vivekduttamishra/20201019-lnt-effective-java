@@ -1,5 +1,7 @@
 package in.conceptarchitect.banking;
 
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+
 public class OverDraftAccount extends BankAccount{
 
 	double odLimit;
@@ -12,43 +14,31 @@ public class OverDraftAccount extends BankAccount{
 	
 	
 	@Override
-	public boolean withdraw(double amount, String password) {
+	public void withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
-		if(!authenticate(password)) {			
-			return false;
-		}else if(amount<=0) {
+		authenticate(password);		
 			
-			return false;
-			
-		} else if(amount> balance+odLimit) {
-			
-			return false;
-			
-		}else {
-			
-			balance-=amount;
-			
-			if(balance<0) {
-				double odFee= balance/10;
-				balance+=odFee; //odfee is calculated negate
-			}
-			
-			return true;
-			
-		}
+		checkDenomination(amount);
 		
+		if(amount> balance+odLimit) 			
+			throw new InsufficientBalanceException(accountNumber,amount-balance+odLimit);
+			
+		balance-=amount;
+			
+		if(balance<0) {
+			double odFee= balance/10;
+			balance+=odFee; //odfee is calculated negate
+		}
+				
 	}
 	
 	
 	@Override
-	public boolean deposit(double amount) {
+	public void deposit(double amount) {
 		// TODO Auto-generated method stub
-		if(super.deposit(amount)) {
-			adjustOdLimit();
-			return true;
-		} else {
-			return false;
-		}
+		super.deposit(amount);
+		adjustOdLimit();
+		
 	}
 
 	@Override

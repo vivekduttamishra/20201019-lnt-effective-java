@@ -1,5 +1,7 @@
 package in.conceptarchitect.banking;
 
+import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
+
 public class SavingsAccount extends BankAccount {
 
 	public SavingsAccount(String name, String password, double amount) {
@@ -8,14 +10,16 @@ public class SavingsAccount extends BankAccount {
 	}
 	
 	@Override
-	public boolean withdraw(double amount, String password) {
+	public void withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		
 		//write the additional logic that we need
 		if(amount> getBalance()-5000)
-			return false;		
-		else
-			return super.withdraw(amount, password); //let super class work
+			throw new InsufficientBalanceException(accountNumber,amount-getBalance()-5000);
+		
+		
+		
+		super.withdraw(amount, password); //let super class work
 		
 	}
 
