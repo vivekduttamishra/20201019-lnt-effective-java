@@ -43,16 +43,6 @@ public class Bank {
 		return account;
 	}
 	
-	public boolean deposit(int accountNumber, double amount) {
-		BankAccount account = getAccountById(accountNumber);
-		
-		if(account==null)
-			return false; //indicates an error
-		
-		return account.deposit(amount);
-	}
-	
-	
 	public int openAccount(String accountType,String name, String password,  double amount) {
 		
 		BankAccount account=null;
@@ -100,7 +90,14 @@ public class Bank {
 		return true;
 	}
 	
-	
+	public boolean deposit(int accountNumber, double amount) {
+		BankAccount account = getAccountById(accountNumber);
+		
+		if(account==null)
+			return false; //indicates an error
+		
+		return account.deposit(amount);
+	}
 	
 	
 	

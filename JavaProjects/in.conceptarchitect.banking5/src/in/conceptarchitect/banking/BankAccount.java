@@ -61,11 +61,7 @@ public class BankAccount {
 	}
 	
 	public boolean authenticate(String password) {
-		if (!salt(password).equals(this.password))
-			throw new RuntimeException("Invalid Password");
-			
-		return true;
-		
+		return salt(password).equals(this.password);
 	}
 	
 	public boolean changePassword(String oldPassword, String newPassword) {
