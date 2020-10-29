@@ -144,7 +144,7 @@ public class BankTests {
 		bank.closeAccount(accountNumber, password);
 		
 	}
-	
+	 
 
 	@Test(expected=InvalidDenominationException.class)
 	public void deposit_failsForNegativeAmount() {
