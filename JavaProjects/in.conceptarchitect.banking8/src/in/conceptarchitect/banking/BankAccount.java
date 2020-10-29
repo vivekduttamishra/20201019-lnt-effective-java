@@ -1,17 +1,23 @@
 package in.conceptarchitect.banking;
 
+import java.io.Serializable;
+
 import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
 import in.conceptarchitect.banking.exceptions.InvalidCredentialsException;
 import in.conceptarchitect.banking.exceptions.InvalidDenominationException;
 import in.conceptarchitect.utils.Input;
 
-public class BankAccount {
+public class BankAccount implements Serializable{
 	
 	
 	int accountNumber;
 	private String name;
 	private String password;
 	protected double balance;
+	
+	public String getEncryptedPassword() {
+		return password;
+	}
 	
 		
 	public  BankAccount( String name, String password, double amount) {
@@ -126,6 +132,18 @@ public class BankAccount {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return String.format("%s %d\t%f\t%s", this.getClass().getSimpleName(), accountNumber,balance,name);
+	}
+
+
+	public void setAccountNumber(int accountNumber) {
+		// TODO Auto-generated method stub
+		this.accountNumber=accountNumber;
+	}
+
+
+	public void setInternalPassword(String password) {
+		// TODO Auto-generated method stub
+		this.password=password;
 	}
 	
 	

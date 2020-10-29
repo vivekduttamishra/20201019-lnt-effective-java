@@ -61,4 +61,12 @@ public class OverDraftAccount extends BankAccount{
 		return odLimit;
 	}
 
+
+
+	public void setOdLimit(double odLimit) {
+		// TODO Auto-generated method stub
+		this.odLimit=odLimit;
+		
+	}
+
 }

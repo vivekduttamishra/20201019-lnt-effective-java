@@ -4,6 +4,8 @@ import in.conceptarchitect.banking.Bank;
 import in.conceptarchitect.banking.BankAccount;
 import in.conceptarchitect.banking.client.ATM;
 import in.conceptarchitect.banking.repository.ArrayListAccountRepository;
+import in.conceptarchitect.banking.repository.BinaryAccountRepository;
+import in.conceptarchitect.banking.repository.CsvAccountRepository;
 import in.conceptarchitect.utils.Input;
 
 public class Program {
@@ -11,11 +13,15 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		ArrayListAccountRepository accounts=new ArrayListAccountRepository();
+		
+		//ArrayListAccountRepository accounts=new ArrayListAccountRepository();
+		//CsvAccountRepository accounts=new CsvAccountRepository("data/accounts.csv");
+		BinaryAccountRepository accounts= new BinaryAccountRepository("data/accounts.db");
+		
 		
 		Bank icici=new Bank("ICICI", 12,accounts); //bank will have bank accounts
 		
-		seedDummyData(icici); //add some dummy data for test
+		//seedDummyData(icici); //add some dummy data for test
 		
 		runApp(icici);
 

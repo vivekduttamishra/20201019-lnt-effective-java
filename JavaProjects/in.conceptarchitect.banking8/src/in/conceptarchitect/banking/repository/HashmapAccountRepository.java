@@ -1,5 +1,6 @@
 package in.conceptarchitect.banking.repository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,7 +8,7 @@ import java.util.HashMap;
 import in.conceptarchitect.banking.BankAccount;
 import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
 
-public class HashmapAccountRepository implements AccountRepository{
+public class HashmapAccountRepository implements AccountRepository,Serializable{
 	
 	HashMap<Integer,BankAccount> accounts=new HashMap<Integer, BankAccount>();
 	

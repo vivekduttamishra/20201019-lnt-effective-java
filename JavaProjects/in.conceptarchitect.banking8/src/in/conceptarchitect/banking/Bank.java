@@ -49,6 +49,7 @@ public class Bank {
 	public void deposit(int accountNumber, double amount) {
 		BankAccount account = accounts.getAccountById(accountNumber);
 		account.deposit(amount);
+		accounts.save();
 	}
 	
 	
@@ -90,6 +91,8 @@ public class Bank {
 	public void withdraw(int accountNumber, double amount, String password) {
 		BankAccount account = accounts.getAccountById(accountNumber);
 		account.withdraw(amount, password); //may return success or falure
+		
+		accounts.save();
 	}
 	
 	
@@ -100,6 +103,8 @@ public class Bank {
 		
 		src.withdraw(amount, password);
 		target.deposit(amount);
+		
+		accounts.save();
 		
 	}
 
@@ -123,6 +128,8 @@ public class Bank {
 			if(a!=null)
 				a.creditInterest(interestRate);
 		}
+		
+		accounts.commit(); //same as save()
 	}
 
 	
