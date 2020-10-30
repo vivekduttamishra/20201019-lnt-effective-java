@@ -23,13 +23,34 @@ public class LinkedList {
 		return null;
 	}
 	
-	public String get(int pos) {
-	
-		return null;
+	private Node locate(int pos) {
+		Node n=first;
+		if(pos==-1 || pos== size()-1)
+			n=last;
+		else {
+			if(pos<0 || pos>=size())
+				throw new IndexOutOfBoundsException(pos);
+
+			for(int i=0;i<pos;i++)
+				n=n.next;
+			
+		}
+		return n;
 	}
 	
-	public void set(int pos, String value) {
+	
+	public String get(int pos) {
+	
+		Node n = locate(pos);
+			
+		return n.value;
 		
+	}
+
+	
+	public void set(int pos, String value) {
+	
+		locate(pos).value=value;
 	}
 	
 	public int size() {
