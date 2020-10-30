@@ -6,9 +6,9 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Test;
 import static in.conceptarchitect.collections.MyAsserts.*;
-public class LinkedListTests {
+public class StringLinkedListTests {
 
-	LinkedList<String> list;
+	StringLinkedList list;
 	String first="first";
 	String last="last";
 	String [] testValues;
@@ -16,7 +16,7 @@ public class LinkedListTests {
 	
 	@Before
 	public void setUp() throws Exception {
-		list=new LinkedList<String>();
+		list=new StringLinkedList();
 		testValues=new String[] { first,"a","b","c",last};
 		for(String testValue:testValues)
 			list.add(testValue);
@@ -27,10 +27,7 @@ public class LinkedListTests {
 	@Test
 	public void init_listShouldBeEmpty() {
 		
-		LinkedList<String> list=new LinkedList<String>();
-		
-		
-		
+		StringLinkedList list=new StringLinkedList();
 		assertEquals("LinkedList()", list.toString());
 		
 	}
@@ -41,22 +38,17 @@ public class LinkedListTests {
 
 	@Test
 	public void size_shouldBe0ForNewList() {
-		
-		LinkedList<String> list=new LinkedList<>();
-		
-		
+		StringLinkedList list=new StringLinkedList();
 		assertEquals(0,list.size());
 	}
 	
 	@Test
 	public void add_increasesListSize() {
 		
-		LinkedList list=new LinkedList();
-		
 		list.add("one");
 		list.add("two");
 		
-		assertEquals(2,list.size());
+		assertEquals(size+2,list.size());
 	}
 	
 	@Test
@@ -71,7 +63,7 @@ public class LinkedListTests {
 	@Test
 	public void adds_shouldAddValueAsFirstItemInEmptyList() {
 	
-		LinkedList list=new LinkedList();
+		StringLinkedList list=new StringLinkedList();
 		String first="first";		
 		list.add("first");
 		
@@ -186,27 +178,6 @@ public class LinkedListTests {
 //	}
 	
 	
-	
-	@Test
-	public void generic_listCanHoldIntergerValues() {
-		
-		
-		//LinkedList<int> numbers=new LinkedList<>(); //primitive type can't be used for generic
-		
-		LinkedList<Integer> numbers=new LinkedList<>();
-		
-		numbers.add(29);
-		numbers.add(31);
-		
-		int last= numbers.get(-1);
-		
-		
-		
-		assertEquals(29,(int) numbers.get(0));
-		
-		
-		
-	}
 	
 	
 

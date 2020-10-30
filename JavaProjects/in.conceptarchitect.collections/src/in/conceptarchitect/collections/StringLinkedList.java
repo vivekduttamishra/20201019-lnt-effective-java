@@ -1,23 +1,12 @@
 package in.conceptarchitect.collections;
 
-public class LinkedList<Data> {
-	
-	class Node {
-
-		Data value;
-		Node next;
-		Node previous;
-		public Node(Data value) {
-			
-			this.value = value;
-		}
-	}
+public class StringLinkedList {
 
 	Node first;
 	Node last;
 	int count;
 	
-	public void add(Data value) {
+	public void add(String value) {
 		Node newNode=new Node(value);
 		
 		if(size()==0) {
@@ -30,7 +19,7 @@ public class LinkedList<Data> {
 		last=newNode;
 	}
 	
-	public Data remove(int pos) {
+	public String remove(int pos) {
 		return null;
 	}
 	
@@ -50,7 +39,7 @@ public class LinkedList<Data> {
 	}
 	
 	
-	public Data get(int pos) {
+	public String get(int pos) {
 	
 		Node n = locate(pos);
 			
@@ -59,7 +48,7 @@ public class LinkedList<Data> {
 	}
 
 	
-	public void set(int pos, Data value) {
+	public void set(int pos, String value) {
 	
 		locate(pos).value=value;
 	}
