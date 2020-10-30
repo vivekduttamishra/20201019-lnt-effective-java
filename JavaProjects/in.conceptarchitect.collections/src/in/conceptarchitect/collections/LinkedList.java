@@ -1,6 +1,6 @@
 package in.conceptarchitect.collections;
 
-public class LinkedList<Data> {
+public class LinkedList<Data> implements IndexedList<Data> {
 	
 	class Node {
 
@@ -12,12 +12,16 @@ public class LinkedList<Data> {
 			this.value = value;
 		}
 	}
+	
+	
+	
 
 	Node first;
 	Node last;
 	int count;
 	
-	public void add(Data value) {
+	@Override
+	public IndexedList<Data> add(Data value) {
 		Node newNode=new Node(value);
 		
 		if(size()==0) {
@@ -28,6 +32,8 @@ public class LinkedList<Data> {
 		}
 		count++;
 		last=newNode;
+		
+		return this;
 	}
 	
 	public Data remove(int pos) {
@@ -50,6 +56,7 @@ public class LinkedList<Data> {
 	}
 	
 	
+	@Override
 	public Data get(int pos) {
 	
 		Node n = locate(pos);
@@ -59,11 +66,14 @@ public class LinkedList<Data> {
 	}
 
 	
-	public void set(int pos, Data value) {
+	@Override
+	public IndexedList<Data> set(int pos, Data value) {
 	
 		locate(pos).value=value;
+		return this;
 	}
 	
+	@Override
 	public int size() {
 		return count;
 	}

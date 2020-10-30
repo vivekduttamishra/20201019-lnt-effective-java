@@ -99,15 +99,17 @@ public class BankAccount implements Serializable{
 			
 	}
 	
-	public void deposit(double amount) {
+	public double deposit(double amount) {
 		
 		checkDenomination(amount);
 		balance+=amount;
+		
+		return balance; //user should know their updated balance
 		 
 	}
 
 	
-	public void withdraw(double amount, String password) {
+	public double withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		
 		authenticate(password);
@@ -119,13 +121,17 @@ public class BankAccount implements Serializable{
 			
 		balance-=amount;	
 		
+		return balance; //return the updated information
+		
 	}
 
 	
 
-	public void creditInterest(double interestRate) {
+	public double creditInterest(double interestRate) {
 		// TODO Auto-generated method stub
 		balance+=(balance*interestRate)/1200; //one month interest at a time.
+		
+		return balance;
 	}
 	
 	@Override

@@ -27,7 +27,7 @@ public class LinkedListTests {
 	@Test
 	public void init_listShouldBeEmpty() {
 		
-		LinkedList<String> list=new LinkedList<String>();
+		IndexedList<String> list=new LinkedList<String>();
 		
 		
 		
@@ -42,7 +42,7 @@ public class LinkedListTests {
 	@Test
 	public void size_shouldBe0ForNewList() {
 		
-		LinkedList<String> list=new LinkedList<>();
+		IndexedList<String> list=new LinkedList<>();
 		
 		
 		assertEquals(0,list.size());
@@ -51,7 +51,7 @@ public class LinkedListTests {
 	@Test
 	public void add_increasesListSize() {
 		
-		LinkedList list=new LinkedList();
+		IndexedList list=new LinkedList();
 		
 		list.add("one");
 		list.add("two");
@@ -193,7 +193,7 @@ public class LinkedListTests {
 		
 		//LinkedList<int> numbers=new LinkedList<>(); //primitive type can't be used for generic
 		
-		LinkedList<Integer> numbers=new LinkedList<>();
+		IndexedList<Integer> numbers=new LinkedList<>();
 		
 		numbers.add(29);
 		numbers.add(31);

@@ -14,7 +14,7 @@ public class OverDraftAccount extends BankAccount{
 	
 	
 	@Override
-	public void withdraw(double amount, String password) {
+	public BankAccount withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		authenticate(password);		
 			
@@ -30,22 +30,26 @@ public class OverDraftAccount extends BankAccount{
 			balance+=odFee; //odfee is calculated negate
 		}
 				
+		return this;
 	}
 	
 	
 	@Override
-	public void deposit(double amount) {
+	public BankAccount deposit(double amount) {
 		// TODO Auto-generated method stub
 		super.deposit(amount);
 		adjustOdLimit();
 		
+		return this;
+		
 	}
 
 	@Override
-	public void creditInterest(double interestRate) {
+	public BankAccount creditInterest(double interestRate) {
 		// TODO Auto-generated method stub
 		super.creditInterest(interestRate);
 		adjustOdLimit();
+		return this;
 	}
 
 

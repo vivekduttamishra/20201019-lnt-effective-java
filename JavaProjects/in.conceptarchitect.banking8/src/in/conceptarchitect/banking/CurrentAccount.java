@@ -8,9 +8,11 @@ public class CurrentAccount extends BankAccount {
 	}
 
 	@Override
-	public void creditInterest(double interestRate) {
+	public double creditInterest(double interestRate) {
 		// DO NOTHING. THIS METHOD WILL HIDE THE SUPER CLASS METHOD
 		// AND WILL NOT ADD ANY INTEREST
+		
+		return getBalance();
 		
 	}
 	

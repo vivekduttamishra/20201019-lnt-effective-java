@@ -10,7 +10,7 @@ public class SavingsAccount extends BankAccount {
 	}
 	
 	@Override
-	public void withdraw(double amount, String password) {
+	public BankAccount withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		
 		//write the additional logic that we need
@@ -20,6 +20,7 @@ public class SavingsAccount extends BankAccount {
 		
 		
 		super.withdraw(amount, password); //let super class work
+		return this;
 		
 	}
 

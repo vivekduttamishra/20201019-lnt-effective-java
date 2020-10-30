@@ -46,21 +46,22 @@ public class BankAccount implements Serializable{
 		return s;
 	}
 	
-	public void authenticate(String password) {		
+	public BankAccount authenticate(String password) {		
 		
 		if (!salt(password).equals(this.password))
 			throw new InvalidCredentialsException(accountNumber);	
 		
 		//if I reach here. then authentication was successful
+		return this;
 	}
 	
-	public void changePassword(String oldPassword, String newPassword) {
+	public BankAccount changePassword(String oldPassword, String newPassword) {
 		
 		authenticate(oldPassword);//throws exception if authentication fails
 
 		password=salt(newPassword);//If I reach here, authentication was successful
 		
-		
+		return this;
 	}
 	
 	public int getAccountNumber() {
@@ -99,15 +100,17 @@ public class BankAccount implements Serializable{
 			
 	}
 	
-	public void deposit(double amount) {
+	public BankAccount deposit(double amount) {
 		
 		checkDenomination(amount);
 		balance+=amount;
+		
+		return this;
 		 
 	}
 
 	
-	public void withdraw(double amount, String password) {
+	public BankAccount withdraw(double amount, String password) {
 		// TODO Auto-generated method stub
 		
 		authenticate(password);
@@ -117,15 +120,19 @@ public class BankAccount implements Serializable{
 			throw new InsufficientBalanceException(accountNumber, amount-balance);
 			
 			
-		balance-=amount;	
+		balance-=amount;
+		
+		return this;
 		
 	}
 
 	
 
-	public void creditInterest(double interestRate) {
+	public BankAccount creditInterest(double interestRate) {
 		// TODO Auto-generated method stub
 		balance+=(balance*interestRate)/1200; //one month interest at a time.
+		
+		return this;
 	}
 	
 	@Override
@@ -135,15 +142,18 @@ public class BankAccount implements Serializable{
 	}
 
 
-	public void setAccountNumber(int accountNumber) {
+	public BankAccount setAccountNumber(int accountNumber) {
 		// TODO Auto-generated method stub
 		this.accountNumber=accountNumber;
+		
+		return this;
 	}
 
 
-	public void setInternalPassword(String password) {
+	public BankAccount setInternalPassword(String password) {
 		// TODO Auto-generated method stub
 		this.password=password;
+		return this;
 	}
 	
 	
