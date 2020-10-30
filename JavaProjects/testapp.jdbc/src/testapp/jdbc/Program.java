@@ -22,8 +22,6 @@ public class Program {
 		
 		prop.load(new FileReader("src/config/app.properties")); //load properties from this file
 		
-		
-		
 		String url= prop.getProperty("DB_URL");  		//"jdbc:mysql://localhost/bankingdb";  //database access url
 		String user=prop.getProperty("DB_USER");		//database access user
 		String password=prop.getProperty("DB_PASSWORD"); //database access password
