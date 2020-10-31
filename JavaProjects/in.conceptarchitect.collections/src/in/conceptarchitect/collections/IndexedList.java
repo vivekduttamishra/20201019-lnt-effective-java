@@ -68,7 +68,9 @@ public interface IndexedList<Data> {
 	
 	
 	default IndexedList<Data> search(Matcher<Data> matcher){
+		
 		LinkedList<Data> result=new LinkedList<>();
+		
 		for(int i=0;i<size();i++) {
 			Data value= get(i);
 			if(matcher.isMatch(value))

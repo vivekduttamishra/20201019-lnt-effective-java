@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import in.conceptarchitect.utils.EvenNumberMatcher;
@@ -42,11 +43,11 @@ public class IndexedListSearchSpecs {
 				numbers.search(new EvenNumberMatcher());
 		
 		assertListContainsAll(result, 2,18,42,108,22);
-		assertEquals(5, result.size());
+		assertEquals(3, result.size());
 		
 	}
 	
-	@Test
+	@Ignore @Test
 	public void searchShouldReturnMultiplesOf7LessThan100() {
 		
 		
@@ -63,6 +64,8 @@ public class IndexedListSearchSpecs {
 		
 		assertListContainsAll(result, 21,42);
 		assertEquals(2, result.size());
+		
+		throw new RuntimeException("Some error occured");
 		 
 		
 	}	
