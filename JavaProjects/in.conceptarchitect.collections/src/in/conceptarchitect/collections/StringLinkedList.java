@@ -6,6 +6,7 @@ public class StringLinkedList {
 	Node last;
 	int count;
 	
+	
 	public void add(String value) {
 		Node newNode=new Node(value);
 		
