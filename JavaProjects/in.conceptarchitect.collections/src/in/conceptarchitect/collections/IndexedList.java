@@ -1,5 +1,7 @@
 package in.conceptarchitect.collections;
 
+
+
 public interface IndexedList<Data> {
 
 	IndexedList<Data> add(Data value);
@@ -39,6 +41,42 @@ public interface IndexedList<Data> {
 		return this;
 	}
 	
+	default boolean contains(Data value) {
+		for(int i=0;i<size();i++) {
+			if(get(i).equals(value))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	default boolean containsAll(Data... values) {
+		for(Data value: values )
+			if(!contains(value))
+				return false;
+		
+		return true;
+	}
+	
+	default boolean containsAny(Data... values) {
+		for(Data value: values )
+			if(contains(value))
+				return true;
+		
+		return false;
+	}
+	
+	
+	default IndexedList<Data> search(Matcher<Data> matcher){
+		LinkedList<Data> result=new LinkedList<>();
+		for(int i=0;i<size();i++) {
+			Data value= get(i);
+			if(matcher.isMatch(value))
+				result.add(value);
+		}
+		
+		return result;
+	}
 	
 	
 	static <E> IndexedList<E> createList(E...values){
