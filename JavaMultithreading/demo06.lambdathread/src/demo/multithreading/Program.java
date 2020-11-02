@@ -17,6 +17,9 @@ public class Program {
 		thread3.start();
 		
 		
+		System.out.println("Program ends");
+		
+		
 		
 	}
 	
