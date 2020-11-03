@@ -43,7 +43,7 @@ public class BinaryAccountRepositoryTests {
 	
 	@Test
 	public void canSaveEmptyRepository() {
-		repository.save();
+		repository.saveAll();
 		assertTrue(file.exists());
 	}
 	

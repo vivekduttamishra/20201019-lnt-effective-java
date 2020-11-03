@@ -40,7 +40,7 @@ public class CsvRepositoryTests {
 	
 	@Test
 	public void canSaveEmptyRepository() {
-		repository.save();
+		repository.saveAll();
 		assertTrue(file.exists());
 	}
 	

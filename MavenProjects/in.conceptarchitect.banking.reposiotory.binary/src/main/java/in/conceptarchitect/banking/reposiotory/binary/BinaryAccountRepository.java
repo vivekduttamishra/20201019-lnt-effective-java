@@ -43,7 +43,7 @@ public class BinaryAccountRepository implements AccountRepository{
 	public int addAccount(BankAccount account) {
 		// TODO Auto-generated method stub
 		int id=baseRepository.addAccount(account);
-		save();
+		saveAll();
 		return id;
 		
 	}
@@ -58,7 +58,7 @@ public class BinaryAccountRepository implements AccountRepository{
 	public void removeAccount(int accountNumber) {
 		// TODO Auto-generated method stub
 		baseRepository.removeAccount(accountNumber);
-		save();
+		saveAll();
 		
 	}
 
@@ -95,9 +95,15 @@ public class BinaryAccountRepository implements AccountRepository{
 		
 	}
 	
+	@Override
+	public void save(BankAccount account) {
+		// TODO Auto-generated method stub
+		saveAll();
+	}
+	
 	
 	@Override
-	public void save() {
+	public void saveAll() {
 		//logic to save the records
 		
 		FileOutputStream fs=null;

@@ -45,7 +45,13 @@ public class Bank {
 	public void deposit(int accountNumber, double amount) {
 		BankAccount account = accounts.getAccountById(accountNumber);
 		account.deposit(amount);
-		accounts.save();
+		accounts.save(account);
+	}
+	
+	public void changePassword(int accountNumber, String currentPassword, String newPassword) {
+		BankAccount account=accounts.getAccountById(accountNumber);
+		account.changePassword(currentPassword, newPassword);
+		accounts.save(account);
 	}
 	
 	
@@ -88,7 +94,7 @@ public class Bank {
 		BankAccount account = accounts.getAccountById(accountNumber);
 		account.withdraw(amount, password); //may return success or falure
 		
-		accounts.save();
+		accounts.save(account);
 	}
 	
 	
@@ -122,11 +128,13 @@ public class Bank {
 		
 		for(BankAccount a: accounts.getAllAccounts()) {
 			
-			if(a!=null)
+			if(a!=null) {
 				a.creditInterest(interestRate);
+				accounts.save(a);
+			}
 		}
 		
-		accounts.save(); 
+		
 	}
 
 	

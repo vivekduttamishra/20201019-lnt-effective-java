@@ -14,11 +14,11 @@ public interface AccountRepository {
 
 	Collection<BankAccount> getAllAccounts();
 
-	default void save() {
+	default void saveAll() {
 		
 	}
 
 	default void save(BankAccount account) {
-		save();
+		saveAll();
 	}
 }

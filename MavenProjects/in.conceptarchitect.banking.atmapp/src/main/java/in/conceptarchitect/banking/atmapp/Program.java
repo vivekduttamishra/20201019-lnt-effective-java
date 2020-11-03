@@ -1,6 +1,5 @@
 package in.conceptarchitect.banking.atmapp;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,6 +8,7 @@ import java.util.Properties;
 import in.conceptarchitect.banking.atm.ATM;
 import in.conceptarchitect.banking.core.Bank;
 import in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository;
+import in.conceptarchitect.jdbc.JdbcManager;
 
 public class Program {
 
@@ -29,9 +29,16 @@ public class Program {
 		String password=prop.getProperty("DB_PASSWORD");
 		
 		
-		JdbcAccountRepository repository=new JdbcAccountRepository(url);
-		repository.setUserName(user);
-		repository.setPassword(password);
+//		JdbcAccountRepository repository=new JdbcAccountRepository(url);
+//		repository.setUserName(user);
+//		repository.setPassword(password);
+		
+		JdbcManager manager=new JdbcManager();
+		manager.setUrl(url);
+		manager.setPassword(password);
+		manager.setUserName(user);
+		
+		JdbcAccountRepository repository=new JdbcAccountRepository(manager);
 	
 		
 		Bank bank=new Bank("ICICI", 12, repository);		

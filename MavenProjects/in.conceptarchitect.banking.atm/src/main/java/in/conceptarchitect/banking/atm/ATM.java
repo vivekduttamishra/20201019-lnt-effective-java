@@ -46,53 +46,13 @@ public class ATM {
 		}
 	}
 
-	private void _displayUserMenu() {
+	private void doChangePassword() {
 		// TODO Auto-generated method stub
-		System.out.println("Welcome " + accountNumber);
-
-		int choice = 0;
-
-		do {
-			try {
-				choice = keyboard.readInt("1. Deposit  2. Widthraw  3. Transfer  4. Show 5. Close Account  0. Exit: ");
-				switch (choice) {
-				case 1:
-					doDeposit();
-					break;
-				case 2:
-					doWithdraw();
-					break;
-				case 3:
-					doTransfer();
-					break;
-				case 4:
-					doShow();
-					break;
-				case 5:
-					doCloseAccount();
-					return;
-
-				case 0:
-					break;
-				default:
-					System.out.println("invalid input. retry");
-
-				}
-
-			} catch (InvalidCredentialsException ex) {
-				System.out.println("Invalid Credentials for account number " + ex.getAccountNumber());
-			} catch (InvalidAccountNumberException ex) {
-				System.out.println("Invalid Account Number " + ex.getAccountNumber());
-			} catch (InvalidDenominationException ex) {
-				System.out.println("Invalid Amount " + ex.getMessage());
-			} catch (InsufficientBalanceException ex) {
-				System.out.println(
-						"Insufficient Balance in account " + ex.getAccountNumber() + ". Deficit:" + ex.getDeficit());
-			}
-
-			System.out.println();
-		} while (choice != 0);
-
+		String currentPassword=keyboard.readString("current password?");
+		String newPassword=keyboard.readString("new password?");
+		bank.changePassword(accountNumber, currentPassword, newPassword);
+		printSlip("Password changed successfully");
+		
 	}
 
 	private void displayUserMenu() {
@@ -103,7 +63,7 @@ public class ATM {
 
 		do {
 			try {
-				choice = keyboard.readInt("1. Deposit  2. Widthraw  3. Transfer  4. Show 5. Close Account  0. Exit: ");
+				choice = keyboard.readInt("1. Deposit  2. Widthraw  3. Transfer  4. Show 5. Change Password 6. Close Account  0. Exit: ");
 				switch (choice) {
 				case 1:
 					doDeposit();
@@ -118,6 +78,9 @@ public class ATM {
 					doShow();
 					break;
 				case 5:
+					doChangePassword();
+					break;
+				case 6:
 					doCloseAccount();
 					return;
 
