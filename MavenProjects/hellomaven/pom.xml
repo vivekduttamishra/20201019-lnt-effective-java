@@ -6,10 +6,7 @@
 	<artifactId>hellomaven</artifactId>
 	<version>1.0.0.FINAL</version>
 
-	<properties>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
+	
 
 	<dependencies>
 
@@ -24,7 +21,10 @@
 
 	</dependencies>
 	
-	
+	<properties>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
 	<build>
 	    <plugins>
 	        <plugin>
