@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import in.conceptarchitect.banking.atm.ATM;
 import in.conceptarchitect.banking.core.Bank;
 import in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository;
@@ -16,12 +19,25 @@ public class Program {
 		// TODO Auto-generated method stub
 
 		ATM atm = configureAtm();
+		
+		System.out.println(atm);
+		System.out.println("associated bank:"+atm.getBank());
+		//seedDummyAccounts(atm.getBank());
 		atm.start();
 		
 		
 	}
+	
+	
+	public static ATM configureAtm() {
+		
+		ApplicationContext context=new ClassPathXmlApplicationContext("classpath:config/app.config.xml");		
+		ATM atm=  context.getBean(ATM.class);
+		return atm;
+	}
 
-	private static ATM configureAtm() throws IOException, FileNotFoundException {
+	
+	private static ATM _configureAtm() throws IOException, FileNotFoundException {
 		
 		
 		
@@ -63,11 +79,14 @@ public class Program {
 		return atm;
 	}
 
+	
+	
+	
 	private static void seedDummyAccounts(Bank bank) {
 		// TODO Auto-generated method stub
 		bank.openAccount("SavingsAccount", "Vivek", "1111", 50000);
 		bank.openAccount("CurrentAccount", "Sanjay", "1111", 50000);
-		bank.openAccount("OverdraftAccount", "Chetan", "1111", 50000);
+		bank.openAccount("OverDraftAccount", "Chetan", "1111", 50000);
 	}
 
 }

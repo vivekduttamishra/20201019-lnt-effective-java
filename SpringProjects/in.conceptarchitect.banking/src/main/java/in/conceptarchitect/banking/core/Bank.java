@@ -7,23 +7,41 @@ import in.conceptarchitect.reflection.ObjectCreator;
 
 public class Bank {
 	
+	public AccountRepository getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(AccountRepository accounts) {
+		this.accounts = accounts;
+	}
+
 	int accountCount=0;   	
 	String name;
 	double interestRate;
 	
+	
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	ObjectCreator<BankAccount> accountCreator;
 	
 	//storage for BankAccounts
 	AccountRepository accounts;
 	
+	public Bank() {
+		
+	}
 	
-	
-	public Bank(String name, double interestRate, AccountRepository accounts) {
+	public Bank(String name, 
+				double interestRate, 
+				AccountRepository accounts) {
 	
 		this.interestRate=interestRate;
 		this.name=name;
 		this.accounts=accounts;
-		this.accountCreator= new AutoObjectCreator<BankAccount>(); //default dependency
+		
 		 
 	}
 	
