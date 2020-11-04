@@ -72,5 +72,11 @@ public class OverDraftAccount extends BankAccount{
 		this.odLimit=odLimit;
 		
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString()+"\todLimit:"+odLimit;
+	}
 
 }

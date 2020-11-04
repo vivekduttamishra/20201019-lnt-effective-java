@@ -70,7 +70,9 @@ public class JdbcAccountRepository implements AccountRepository {
 		
 		//double odLimit= account instanceof OverDraftAccount? ((OverDraftAccount)account).getOdLimit():0;
 		
-		double odLimit= ReflectionHelper.get(account, "odLimit", 0);
+		
+		//get odLImit if available, else give 0 if there is no odLimit field
+		double odLimit= ReflectionHelper.get(account, "odLimit", 0.0);
 		
 		final String qry=String.format("update bankaccounts "
 								+ "set name='%s', password='%s', balance=%f, odLimit=%f"
