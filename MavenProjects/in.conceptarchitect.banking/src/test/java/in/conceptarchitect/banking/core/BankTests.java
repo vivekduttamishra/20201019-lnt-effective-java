@@ -30,9 +30,9 @@ public class BankTests {
 		
 		bank=new Bank("ICICI",rate,repository);
 		
-		bank.openAccount("savings", "S", password, amount);
-		bank.openAccount("current", "C", password, amount);
-		bank.openAccount("overdraft", "O", password, amount);
+		bank.openAccount("SavingsAccount", "S", password, amount);
+		bank.openAccount("CurrentAccount", "C", password, amount);
+		bank.openAccount("OverDraftAccount", "O", password, amount);
 		
 		one=bank.getAccount(1, password);
 		two=bank.getAccount(2, password);

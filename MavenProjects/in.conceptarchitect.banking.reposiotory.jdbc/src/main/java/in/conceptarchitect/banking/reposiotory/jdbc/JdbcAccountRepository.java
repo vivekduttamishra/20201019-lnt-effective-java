@@ -16,6 +16,7 @@ import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
 import in.conceptarchitect.banking.repository.AccountRepository;
 import in.conceptarchitect.jdbc.JdbcManager;
 import in.conceptarchitect.jdbc.StatementExecutor;
+import in.conceptarchitect.reflection.ReflectionHelper;
 
 public class JdbcAccountRepository implements AccountRepository {
 	
@@ -37,11 +38,12 @@ public class JdbcAccountRepository implements AccountRepository {
 	public int addAccount(BankAccount account) {
 		// TODO Auto-generated method stub
 		
-		double odLimit=0;
-		if(account instanceof OverDraftAccount) {
-			OverDraftAccount od=(OverDraftAccount) account;
-			odLimit=od.getOdLimit();
-		}
+		double odLimit=ReflectionHelper.get(account, "odLimit", 0); //if not found give me a 0
+		
+//		if(account instanceof OverDraftAccount) {
+//			OverDraftAccount od=(OverDraftAccount) account;
+//			odLimit=od.getOdLimit();
+//		}
 		
 		final String qry=String.format("insert into bankaccounts(account_type,name,password,balance,odLimit) "
 								+ "values('%s','%s','%s',%f,%f)", 
@@ -66,7 +68,9 @@ public class JdbcAccountRepository implements AccountRepository {
 	public void save(BankAccount account) {
 		// TODO Auto-generated method stub
 		
-		double odLimit= account instanceof OverDraftAccount? ((OverDraftAccount)account).getOdLimit():0;
+		//double odLimit= account instanceof OverDraftAccount? ((OverDraftAccount)account).getOdLimit():0;
+		
+		double odLimit= ReflectionHelper.get(account, "odLimit", 0);
 		
 		final String qry=String.format("update bankaccounts "
 								+ "set name='%s', password='%s', balance=%f, odLimit=%f"
@@ -127,9 +131,29 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 
-
-
 	private BankAccount createAccount(ResultSet rs) throws SQLException {
+		BankAccount account=null;
+		String accountType=rs.getString("account_type");
+		int accountNumber=rs.getInt("account_number");
+		String name=rs.getString("name");
+		String password=rs.getString("password");
+		double balance= rs.getDouble("balance");
+		double odLimit= rs.getDouble("odLimit");
+				
+		account=(BankAccount) ReflectionHelper.create(accountType, name,"anything", balance);
+		
+		account.setAccountNumber(accountNumber);
+		account.setInternalPassword(password);
+
+		//if current object has no obLimit, this function will do nothing
+		ReflectionHelper.set(account, "odLimit", odLimit);
+		
+		return account;
+	}
+
+
+
+	private BankAccount _createAccount(ResultSet rs) throws SQLException {
 		BankAccount account=null;
 		String accountType=rs.getString("account_type");
 		int accountNumber=rs.getInt("account_number");

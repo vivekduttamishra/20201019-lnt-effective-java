@@ -2,6 +2,8 @@ package in.conceptarchitect.banking.core;
 
 import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
 import in.conceptarchitect.banking.repository.AccountRepository;
+import in.conceptarchitect.reflection.AutoObjectCreator;
+import in.conceptarchitect.reflection.ObjectCreator;
 
 public class Bank {
 	
@@ -9,6 +11,7 @@ public class Bank {
 	String name;
 	double interestRate;
 	
+	ObjectCreator<BankAccount> accountCreator;
 	
 	//storage for BankAccounts
 	AccountRepository accounts;
@@ -20,10 +23,45 @@ public class Bank {
 		this.interestRate=interestRate;
 		this.name=name;
 		this.accounts=accounts;
-		
+		this.accountCreator= new AutoObjectCreator<BankAccount>(); //default dependency
 		 
 	}
 	
+	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
+		this.accountCreator = accountCreator;  //can be replaced later
+	}
+	
+	public ObjectCreator<BankAccount> getAccountCreator() {
+		return accountCreator;
+	}
+
+
+	public int openAccount(String accountType,String name, String password,  double amount) {
+		
+//		BankAccount account=null;	
+//		switch(accountType.toLowerCase()) {
+//		
+//			default: case "savings": account=new SavingsAccount(name,password,amount);break;
+//			case "current": account=new CurrentAccount(name,password,amount);break;
+//			case "overdraft":account=new OverDraftAccount(name,password,amount); break;
+//		}
+//		
+//		
+//		
+//		//Bank should set the account Number which is accessible due to package scope
+		
+		if(!accountType.contains("."))
+			accountType="in.conceptarchitect.banking.core."+accountType;
+
+		BankAccount account= (BankAccount) accountCreator.create(accountType, name, password, amount);
+		account.accountNumber=++accountCount;
+		
+		return accounts.addAccount(account);
+	}
+	
+
+
+
 	public double getInterestRate() {
 		return interestRate;
 	}
@@ -55,31 +93,12 @@ public class Bank {
 	}
 	
 	
-	public int openAccount(String accountType,String name, String password,  double amount) {
-		
-		BankAccount account=null;
-		
-		
-		switch(accountType.toLowerCase()) {
-		
-			default: case "savings": account=new SavingsAccount(name,password,amount);break;
-			case "current": account=new CurrentAccount(name,password,amount);break;
-			case "overdraft":account=new OverDraftAccount(name,password,amount); break;
-		}
-		
-		
-		
-		//Bank should set the account Number which is accessible due to package scope
-		account.accountNumber=++accountCount;
-		
-		return accounts.addAccount(account);
-	}
+	
 
 	public void closeAccount(int accountNumber, String password) {
 		BankAccount account = accounts.getAccountById(accountNumber);
 		
 		account.authenticate(password);
-				
 		
 		if(account.getBalance()<0)
 			throw new InsufficientBalanceException(accountNumber, -account.getBalance()," You need to clear the overdue to close your account");
@@ -133,8 +152,7 @@ public class Bank {
 				accounts.save(a);
 			}
 		}
-		
-		
+				
 	}
 
 	
