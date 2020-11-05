@@ -6,7 +6,7 @@ public class AutoObjectCreator<T> implements ObjectCreator<T> {
 
 	public AutoObjectCreator() {
 		// TODO Auto-generated constructor stub
-		System.out.printf("AutoObjectCreator created\n");
+		//System.out.printf("AutoObjectCreator created\n");
 	}
 	
 	@Override

@@ -5,6 +5,9 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import in.conceptarchitect.banking.core.BankAccount;
+import in.conceptarchitect.banking.core.CurrentAccount;
+import in.conceptarchitect.banking.core.OverDraftAccount;
+import in.conceptarchitect.banking.core.SavingsAccount;
 import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
 
 public class HashmapAccountRepository implements AccountRepository,Serializable{
@@ -40,6 +43,25 @@ public class HashmapAccountRepository implements AccountRepository,Serializable{
 	public Collection<BankAccount> getAllAccounts() {
 		return accounts.values();
 	}
+	
+	
+	public void seed() {
+		
+		BankAccount[] accounts= {
+				new SavingsAccount("Vivek","hello",50000),
+				new CurrentAccount("EduWorldPublishers","hello",50000),
+				new OverDraftAccount("Fagun","hello",50000)
+		};
+		
+		int count=0;
+		for(BankAccount account:accounts) {
+			count++;
+			account.setAccountNumber(count);
+			addAccount(account);
+		}		
+		
+	}
+	
 	
 	
 

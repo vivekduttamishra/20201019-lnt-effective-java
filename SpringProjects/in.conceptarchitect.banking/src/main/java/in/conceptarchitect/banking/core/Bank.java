@@ -1,10 +1,13 @@
 package in.conceptarchitect.banking.core;
 
+import org.springframework.stereotype.Component;
+
 import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
 import in.conceptarchitect.banking.repository.AccountRepository;
-import in.conceptarchitect.reflection.AutoObjectCreator;
 import in.conceptarchitect.reflection.ObjectCreator;
 
+
+@Component
 public class Bank {
 	
 	public AccountRepository getAccounts() {
@@ -26,6 +29,15 @@ public class Bank {
 	}
 
 	ObjectCreator<BankAccount> accountCreator;
+	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
+		System.out.println("bank set to use accountCreator:"+accountCreator.getClass().getSimpleName());
+		this.accountCreator = accountCreator;  //can be replaced later
+	}
+	
+	public ObjectCreator<BankAccount> getAccountCreator() {
+		return accountCreator;
+	}
+
 	
 	//storage for BankAccounts
 	AccountRepository accounts;
@@ -45,15 +57,7 @@ public class Bank {
 		 
 	}
 	
-	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
-		System.out.println("bank set to use accountCreator:"+accountCreator.getClass().getSimpleName());
-		this.accountCreator = accountCreator;  //can be replaced later
-	}
 	
-	public ObjectCreator<BankAccount> getAccountCreator() {
-		return accountCreator;
-	}
-
 
 	public int openAccount(String accountType,String name, String password,  double amount) {
 		

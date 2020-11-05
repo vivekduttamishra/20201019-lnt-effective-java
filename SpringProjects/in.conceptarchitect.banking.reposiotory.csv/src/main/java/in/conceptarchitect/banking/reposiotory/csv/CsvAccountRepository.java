@@ -1,6 +1,7 @@
 package in.conceptarchitect.banking.reposiotory.csv;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,32 +13,56 @@ import in.conceptarchitect.banking.core.OverDraftAccount;
 import in.conceptarchitect.banking.core.SavingsAccount;
 import in.conceptarchitect.banking.repository.AccountRepository;
 import in.conceptarchitect.banking.repository.HashmapAccountRepository;
+import in.conceptarchitect.reflection.AutoObjectCreator;
+import in.conceptarchitect.reflection.ObjectCreator;
+import in.conceptarchitect.reflection.ReflectionHelper;
 
 public class CsvAccountRepository implements AccountRepository{
 	
 	String path;
 	AccountRepository baseRepository;
 	
-	public CsvAccountRepository(String path, AccountRepository baseRepository) {
-		super();
-		this.path = path;
-		this.baseRepository = baseRepository;
-		
-		load(); //try to fetch existing data
-		
+	ObjectCreator<BankAccount> accountCreator;
+
+	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
+		System.out.println("CSVAccount set to use accountCreator:"+accountCreator.getClass().getSimpleName());
+		this.accountCreator = accountCreator;  //can be replaced later
 	}
 	
+	public ObjectCreator<BankAccount> getAccountCreator() {
+		return accountCreator;
+	}
+
+	
+//	private CsvAccountRepository(String path, AccountRepository baseRepository) {
+//		super();
+//		this.path = path;
+//		this.baseRepository = baseRepository;		
+//		load(); //try to fetch existing data		
+//	}
+	
 	
 
-	public CsvAccountRepository(String path) {
-		this(path, new HashmapAccountRepository());
+	//Factory Method Pattern --- We use a factory method to create an Object
+	public static CsvAccountRepository loadRepository(String path){		
+		System.out.println("trying to load repository from : "+new File(path).getAbsolutePath());
+		CsvAccountRepository repository=new CsvAccountRepository();
+		repository.path=path;
+		repository.baseRepository=new HashmapAccountRepository();
+		repository.load();
+		return repository;		
 	}
 	
+	private  CsvAccountRepository() {
+		// TODO Auto-generated constructor stub
+		System.out.println("Private CsvAccountRepository constructor is called.");
+		accountCreator=new AutoObjectCreator<BankAccount>();
+	}
 	
-
-
-
-
+//	private CsvAccountRepository(String path) {
+//		this(path, new HashmapAccountRepository());
+//	}
+	
 
 
 
@@ -71,7 +96,7 @@ public class CsvAccountRepository implements AccountRepository{
 	}
 
 	
-	public void load() {
+	private void load() {
 	
 		BufferedReader reader=null;
 		
@@ -96,17 +121,20 @@ public class CsvAccountRepository implements AccountRepository{
 				
 				
 				
-				switch(fields[0]) {
-					default:case "savingsaccount": account=new SavingsAccount(name, "", balance); break;
-					case "currentaccount": account=new CurrentAccount(name,"",balance); break;
-					case "overdraftaccount": 
-						account=new OverDraftAccount(name,"",balance);
-						((OverDraftAccount)account).setOdLimit(odLimit);
-						break;
-				}
+//				switch(fields[0]) {
+//					default:case "savingsaccount": account=new SavingsAccount(name, "", balance); break;
+//					case "currentaccount": account=new CurrentAccount(name,"",balance); break;
+//					case "overdraftaccount": 
+//						account=new OverDraftAccount(name,"",balance);
+//						((OverDraftAccount)account).setOdLimit(odLimit);
+//						break;
+//				}
+				
+				account=(BankAccount) accountCreator.create(fields[0], name,"", balance);				
 				
 				account.setAccountNumber(accountNumber);
 				account.setInternalPassword(password);
+				ReflectionHelper.set(account, "odLimit", odLimit);
 				
 				baseRepository.addAccount(account);
 				
@@ -138,18 +166,18 @@ public class CsvAccountRepository implements AccountRepository{
 			writer=new PrintWriter(path);
 			writer.println("Type,AccountNumber,Name,Password,Balance,ODLimit");
 			for(BankAccount account: getAllAccounts()) {
-				double odLimit=0;
-				if(account instanceof OverDraftAccount) {
-					OverDraftAccount oda=(OverDraftAccount)account;
-					odLimit=oda.getOdLimit();
-				}
+//				double odLimit=0;
+//				if(account instanceof OverDraftAccount) {
+//					OverDraftAccount oda=(OverDraftAccount)account;
+//					odLimit=oda.getOdLimit();
+//				}
 				writer.printf("%s,%d,%s,%s,%f,%f\r\n",
-							account.getClass().getSimpleName().toLowerCase(),
+							account.getClass().getName(),
 							account.getAccountNumber(),
 							account.getName(),
 							account.getEncryptedPassword(),
 							account.getBalance(),
-							odLimit
+							ReflectionHelper.get(account, "odLimit", 0.0)
 							);						
 							
 			}

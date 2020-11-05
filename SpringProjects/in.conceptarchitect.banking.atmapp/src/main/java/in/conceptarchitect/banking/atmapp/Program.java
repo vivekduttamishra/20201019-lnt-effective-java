@@ -19,6 +19,7 @@ public class Program {
 		// TODO Auto-generated method stub
 
 		ATM atm = configureAtm();
+		//seedDummyAccounts(atm.getBank());
 		atm.start();
 		
 		
