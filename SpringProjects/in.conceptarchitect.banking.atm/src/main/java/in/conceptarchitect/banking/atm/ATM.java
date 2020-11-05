@@ -18,19 +18,34 @@ public class ATM {
 	Input keyboard = new Input();
 	private int accountNumber;
 
+	public ATM() {
+		// TODO Auto-generated constructor stub
+		System.out.printf("ATM created\n");
+	}
+	
 	public void setBank(Bank bank) {
 		// TODO Auto-generated method stub
 		this.bank = bank;
+		System.out.printf("ATM bank set work with bank %s \n", bank.getName());
 	}
 
 	public void start() {
 
-		if(this.bank==null)
-			throw new IllegalStateException("ATM is not currently associated with any Bank");
+		//if(this.bank==null)
+		//	throw new IllegalStateException("ATM is not currently associated with any Bank");
 		displayWelcomeScreen();
 
 	}
 
+	
+	public void selfCheck() {
+		if(this.bank==null)
+			throw new IllegalStateException("ATM is not currently associated with any Bank");
+		else
+			System.out.println("ATM is ready to use...");
+	}
+	
+	
 	private void displayWelcomeScreen() {
 		// TODO Auto-generated method stub
 		try {

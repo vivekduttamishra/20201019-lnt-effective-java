@@ -13,12 +13,17 @@ public class JdbcManager {
 	String url;
 	String userName;
 	String password;
+	
+	public JdbcManager() {
+		System.out.printf("Jdbc Manager created\n");
+	}
 
 	public String getUrl() {
 		return url;
 	}
 
 	public void setUrl(String url) {
+		System.out.println("jdbc manager url set : "+url);
 		this.url = url;
 	}
 

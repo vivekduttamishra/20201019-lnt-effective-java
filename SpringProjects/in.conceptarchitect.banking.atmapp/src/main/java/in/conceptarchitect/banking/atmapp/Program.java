@@ -19,20 +19,19 @@ public class Program {
 		// TODO Auto-generated method stub
 
 		ATM atm = configureAtm();
-		
-		System.out.println(atm);
-		System.out.println("associated bank:"+atm.getBank());
-		//seedDummyAccounts(atm.getBank());
 		atm.start();
 		
 		
-	}
-	
+	}	
 	
 	public static ATM configureAtm() {
 		
+		System.out.println("creating the Application Context...");
 		ApplicationContext context=new ClassPathXmlApplicationContext("classpath:config/app.config.xml");		
+		System.out.println("Application Context is created...");
+		
 		ATM atm=  context.getBean(ATM.class);
+		//atm.selfCheck();
 		return atm;
 	}
 

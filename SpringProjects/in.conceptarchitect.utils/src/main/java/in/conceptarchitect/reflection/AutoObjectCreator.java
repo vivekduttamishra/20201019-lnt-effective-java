@@ -4,6 +4,11 @@ import java.lang.reflect.Constructor;
 
 public class AutoObjectCreator<T> implements ObjectCreator<T> {
 
+	public AutoObjectCreator() {
+		// TODO Auto-generated constructor stub
+		System.out.printf("AutoObjectCreator created\n");
+	}
+	
 	@Override
 	public T create(Class<T> cls, Object... arguments) {
 

@@ -27,6 +27,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	
 		public JdbcAccountRepository(JdbcManager manager) {
 		super();
+		System.out.printf("JdbcAccountRepository created with JdbcManager %s\n", manager.getUrl());
 		this.manager = manager;
 	}
 	

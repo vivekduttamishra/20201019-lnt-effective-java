@@ -17,14 +17,22 @@
 	
 	<bean class="in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository" autowire="constructor"/>
 	
-	<bean class="in.conceptarchitect.banking.core.Bank" 
+	 <bean class="in.conceptarchitect.banking.core.Bank" 
 		p:name="ICICI"
 		p:interestRate="12"
-	/>
+		
+		lazy-init="true"
+	/> 
 	
 	<bean class="in.conceptarchitect.reflection.AutoObjectCreator" />
 	  
-	<bean class="in.conceptarchitect.banking.atm.ATM"  />
+	<bean 
+		class="in.conceptarchitect.banking.atm.ATM"
+		scope="prototype" 
+		
+		init-method="selfCheck"
+	
+	 />
 		
 	
 

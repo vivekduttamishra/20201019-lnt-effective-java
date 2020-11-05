@@ -31,7 +31,7 @@ public class Bank {
 	AccountRepository accounts;
 	
 	public Bank() {
-		
+		System.out.println("Bank object created...");
 	}
 	
 	public Bank(String name, 
@@ -41,11 +41,12 @@ public class Bank {
 		this.interestRate=interestRate;
 		this.name=name;
 		this.accounts=accounts;
-		
+		System.out.printf("Bank %s created\n", name);
 		 
 	}
 	
 	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
+		System.out.println("bank set to use accountCreator:"+accountCreator.getClass().getSimpleName());
 		this.accountCreator = accountCreator;  //can be replaced later
 	}
 	
