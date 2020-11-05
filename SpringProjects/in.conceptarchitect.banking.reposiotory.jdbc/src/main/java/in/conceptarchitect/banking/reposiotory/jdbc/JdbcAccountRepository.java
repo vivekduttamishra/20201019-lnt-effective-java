@@ -1,12 +1,12 @@
 package in.conceptarchitect.banking.reposiotory.jdbc;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Collection;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import in.conceptarchitect.banking.core.BankAccount;
 import in.conceptarchitect.banking.core.CurrentAccount;
@@ -15,17 +15,18 @@ import in.conceptarchitect.banking.core.SavingsAccount;
 import in.conceptarchitect.banking.exceptions.InvalidAccountNumberException;
 import in.conceptarchitect.banking.repository.AccountRepository;
 import in.conceptarchitect.jdbc.JdbcManager;
-import in.conceptarchitect.jdbc.StatementExecutor;
 import in.conceptarchitect.reflection.ReflectionHelper;
 
+@Repository()
 public class JdbcAccountRepository implements AccountRepository {
 	
-	String url,userName,password; //just for time being
+	
 	
 	
 	JdbcManager manager;
 	
-		public JdbcAccountRepository(JdbcManager manager) {
+	@Autowired //constructor autowiring
+	public JdbcAccountRepository(JdbcManager manager) {
 		super();
 		System.out.printf("JdbcAccountRepository created with JdbcManager %s\n", manager.getUrl());
 		this.manager = manager;

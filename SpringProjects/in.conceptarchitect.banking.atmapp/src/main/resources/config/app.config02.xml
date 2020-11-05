@@ -6,7 +6,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean class="in.conceptarchitect.reflection.AutoObjectCreator" name="accountCreator" />
+
+
+
+	<bean class="in.conceptarchitect.reflection.AutoObjectCreator" 
+			name="accountCreator" />
+			
 
 	<bean class="in.conceptarchitect.jdbc.JdbcManager" name="jdbcManager" >
 		<property name="url" value="jdbc:mysql://localhost/bankingdb"/>

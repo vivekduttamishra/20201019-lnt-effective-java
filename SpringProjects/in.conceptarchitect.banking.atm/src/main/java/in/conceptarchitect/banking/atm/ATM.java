@@ -1,5 +1,8 @@
 package in.conceptarchitect.banking.atm;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import in.conceptarchitect.banking.core.Bank;
 import in.conceptarchitect.banking.exceptions.BankingException;
 import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
@@ -8,26 +11,31 @@ import in.conceptarchitect.banking.exceptions.InvalidCredentialsException;
 import in.conceptarchitect.banking.exceptions.InvalidDenominationException;
 import in.conceptarchitect.utils.Input;
 
+@Component
 public class ATM {
-
+	Bank bank;
+	Input keyboard = new Input();
+	private int accountNumber;
+	
+	@Autowired
+	public void setBank(Bank bank) {
+		// TODO Auto-generated method stub
+		this.bank = bank;
+		System.out.printf("ATM bank set work with bank %s \n", bank.getName());
+	}
+	
+	
 	public Bank getBank() {
 		return bank;
 	}
 
-	Bank bank;
-	Input keyboard = new Input();
-	private int accountNumber;
+
 
 	public ATM() {
 		// TODO Auto-generated constructor stub
 		System.out.printf("ATM created\n");
 	}
 	
-	public void setBank(Bank bank) {
-		// TODO Auto-generated method stub
-		this.bank = bank;
-		System.out.printf("ATM bank set work with bank %s \n", bank.getName());
-	}
 
 	public void start() {
 

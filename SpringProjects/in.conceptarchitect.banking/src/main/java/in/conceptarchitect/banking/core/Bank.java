@@ -1,34 +1,46 @@
 package in.conceptarchitect.banking.core;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import in.conceptarchitect.banking.exceptions.InsufficientBalanceException;
 import in.conceptarchitect.banking.repository.AccountRepository;
 import in.conceptarchitect.reflection.ObjectCreator;
 
 
-@Component
+@Service
 public class Bank {
+	
+	int accountCount=0;   	
+	String name;
+	double interestRate;
+	
+	@Autowired
+	ObjectCreator<BankAccount> accountCreator;
+	//@Autowired the setter or constructor instead of field
+	AccountRepository accounts;
+	
+	@Autowired
+	@Qualifier("accountRepository")
+	public void setAccounts(AccountRepository accounts) {
+		this.accounts = accounts;
+	}	
+	
 	
 	public AccountRepository getAccounts() {
 		return accounts;
 	}
 
-	public void setAccounts(AccountRepository accounts) {
-		this.accounts = accounts;
-	}
 
-	int accountCount=0;   	
-	String name;
-	double interestRate;
-	
 	
 	
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	ObjectCreator<BankAccount> accountCreator;
+	
 	public void setAccountCreator(ObjectCreator<BankAccount> accountCreator) {
 		System.out.println("bank set to use accountCreator:"+accountCreator.getClass().getSimpleName());
 		this.accountCreator = accountCreator;  //can be replaced later
@@ -39,8 +51,6 @@ public class Bank {
 	}
 
 	
-	//storage for BankAccounts
-	AccountRepository accounts;
 	
 	public Bank() {
 		System.out.println("Bank object created...");

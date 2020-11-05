@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import config.AppConfig;
 import in.conceptarchitect.banking.atm.ATM;
 import in.conceptarchitect.banking.core.Bank;
 import in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository;
@@ -25,7 +27,19 @@ public class Program {
 		
 	}	
 	
+	
 	public static ATM configureAtm() {
+		
+		System.out.println("creating the Application Context...");
+		ApplicationContext context=new AnnotationConfigApplicationContext(AppConfig.class);		
+		System.out.println("Application Context is created...");
+		
+		ATM atm=  context.getBean(ATM.class);
+		//atm.selfCheck();
+		return atm;
+	}
+	
+	public static ATM configureAtm01() {
 		
 		System.out.println("creating the Application Context...");
 		ApplicationContext context=new ClassPathXmlApplicationContext("classpath:config/app.config.xml");		

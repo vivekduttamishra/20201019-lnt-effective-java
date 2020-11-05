@@ -11,12 +11,39 @@
 
 	<context:property-placeholder location="classpath:app.properties"/>
 	
-	<context:component-scan base-package="in.conceptarchitect"/>
 	
-	<bean name="accountRepository" 
-		  class="in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository" />
-		  
+<!-- 
+	<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" 
+	       p:location="classpath:app.properties"
+	/>
+ -->	
+	
+
+	<bean class="in.conceptarchitect.jdbc.JdbcManager" 		  
+		  p:url="${DB_URL}"
+		  p:userName="${DB_USER}"
+		  p:password="${DB_PASSWORD}"  />
+	
+	
+	<bean class="in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository" autowire="constructor"/>
+	
+	 <bean class="in.conceptarchitect.banking.core.Bank" 
+		p:name="ICICI"
+		p:interestRate="12"
+		
+		lazy-init="true"
+	/> 
+	
 	<bean class="in.conceptarchitect.reflection.AutoObjectCreator" />
+	  
+	<bean 
+		class="in.conceptarchitect.banking.atm.ATM"
+		scope="prototype" 
+		
+		init-method="selfCheck"
+	
+	 />
+		
 	
 
 </beans>

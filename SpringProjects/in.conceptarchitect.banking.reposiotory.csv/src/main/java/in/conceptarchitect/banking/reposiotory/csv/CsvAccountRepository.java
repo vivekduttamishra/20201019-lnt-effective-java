@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collection;
 
+import org.springframework.stereotype.Repository;
+
 import in.conceptarchitect.banking.core.BankAccount;
 import in.conceptarchitect.banking.core.CurrentAccount;
 import in.conceptarchitect.banking.core.OverDraftAccount;
@@ -17,6 +19,7 @@ import in.conceptarchitect.reflection.AutoObjectCreator;
 import in.conceptarchitect.reflection.ObjectCreator;
 import in.conceptarchitect.reflection.ReflectionHelper;
 
+@Repository()
 public class CsvAccountRepository implements AccountRepository{
 	
 	String path;

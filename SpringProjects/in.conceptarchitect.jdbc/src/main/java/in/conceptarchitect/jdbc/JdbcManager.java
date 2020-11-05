@@ -8,11 +8,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class JdbcManager {
 
+	@Value("${DB_URL}")  //injected from the property files
 	String url;
-	String userName;
+	
+	@Value("${DB_USER}")
+	String userName;	
+	
+	@Value("${DB_PASSWORD}")
 	String password;
+	
+	
 	
 	public JdbcManager() {
 		System.out.printf("Jdbc Manager created\n");

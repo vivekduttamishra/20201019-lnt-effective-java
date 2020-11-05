@@ -13,10 +13,5 @@
 	
 	<context:component-scan base-package="in.conceptarchitect"/>
 	
-	<bean name="accountRepository" 
-		  class="in.conceptarchitect.banking.reposiotory.jdbc.JdbcAccountRepository" />
-		  
-	<bean class="in.conceptarchitect.reflection.AutoObjectCreator" />
-	
 
 </beans>
