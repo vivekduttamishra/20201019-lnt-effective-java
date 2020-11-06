@@ -42,10 +42,11 @@ public class JdbcAccountRepository implements AccountRepository {
 		
 		double odLimit=ReflectionHelper.get(account, "odLimit", 0); //if not found give me a 0
 		
-//		if(account instanceof OverDraftAccount) {
-//			OverDraftAccount od=(OverDraftAccount) account;
-//			odLimit=od.getOdLimit();
-//		}
+		if(account instanceof OverDraftAccount) {
+			OverDraftAccount od=(OverDraftAccount) account;
+			odLimit=od.getOdLimit();
+		}
+		
 		
 		final String qry=String.format("insert into bankaccounts(account_type,name,password,balance,odLimit) "
 								+ "values('%s','%s','%s',%f,%f)", 
