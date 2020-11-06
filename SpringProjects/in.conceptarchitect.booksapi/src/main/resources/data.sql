@@ -1,0 +1,7 @@
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('1111','The Accursed God','Vivek Dutta Mishra',299,4.3,'An Amazon #1 best-seller epic fiction based on Mahabharata','Mahabharata, Epic, Best Seller','the-accursed-god.jpg');
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('2222','My Experiments with Truth','Mahatma Gandhi',120,4.1,'An auto biography of the greatest man of the century','Mahatma Gandhi, autobiography','my-experiments-with-truth.jpg');
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('3333','Freedom and Midnigh','Larry Collins',350,4.1,"The story of few months around India's Independence",'India, Mahatma Gandhi, Best Seller','freedom-at-midnight.jpg');
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('4444','India Unbound','Gurucharan Das',300,3.8,'A economic and political history of India post independence','India, economics, politics','india-unbound.jpg');
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('5555','The Count of Monte Cristo','Alexandre Dumas',401,4.1,'A classic best seller','history, france, fiction, revenge','the-count-of-monte-cristo.jpg');
+INSERT INTO books (isbn,title,author,price,rating,description,tags,cover) VALUES ('6666','The Immortals of Meluha','Amish',200,4,'Part 1 of Shiva Triology','mythological, fiction, revenge','the-immortals-of-meluha.jpg');
+
